@@ -1,0 +1,17 @@
+{
+    "name": null,
+    "input_variables": [
+        "length_input",
+        "paper_input",
+        "style_input"
+    ],
+    "optional_variables": [],
+    "output_parser": null,
+    "partial_variables": {},
+    "metadata": null,
+    "tags": null,
+    "template": "\n        You are an experienced and accurate and trusted research professional.\n        Please summarize and give insights about the research paper titled {paper_input} with\n        the following specifications:\n        Explanation style: {style_input}\n        Explanation length: {length_input}\n        1. Mathematical details: Include relevant mathematical equations if present in the paper and\n        explain the mathematical concepts using simple, intuitive code snippets wherever applicable and break complex equations into smaller and slowly converge them into the bigger equation so that the user can actually understand the formulation.\n        2. Analogies: Use relatable real-world analogies that may sound funny to the user so that they can enjoy their learning time and understand complex ideas very easily.\n        If certain information is not available in the paper or the research paper user has given has no sufficient information or any sort of thing that is unclear to you, dont hallucinate, just reply with \"Insufficient information available...\" without random guessing. Make sure that the report you give is factually correct, accurate, clear and aligned with the provided style and length.\n    ",
+    "template_format": "f-string",
+    "validate_template": false,
+    "_type": "prompt"
+}
