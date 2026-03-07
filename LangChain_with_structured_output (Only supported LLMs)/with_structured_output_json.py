@@ -15,7 +15,7 @@ model = ChatGoogleGenerativeAI(
 # Output schema
 json_schema = None
 with open('review.json', 'r') as file:
-    json_schema = json.load(file)
+    json_schema = json.load(file) # We use this approach when we are working with multiple languages in our project
 
 structured_model = model.with_structured_output(json_schema)
 
