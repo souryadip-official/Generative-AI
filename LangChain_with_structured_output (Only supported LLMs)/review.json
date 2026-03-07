@@ -1,0 +1,62 @@
+{
+    "title": "Review",
+    "description": "schema of product review",
+    "type": "object",
+    "properties": {
+        "summary": {
+            "type": "string",
+            "description": "A brief summary of the review"
+        },
+        "sentiment": {
+            "type": "string",
+            "description": "Sentiment of the review like positive, negative, neutral"
+        },
+        "components_discussed": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "Write all the components of the product that is talked about in the review"
+        },
+        "positive_sides": {
+            "type": [
+                "array",
+                "null"
+            ],
+            "items": {
+                "type": "string"
+            },
+            "description": "Write the positive sides of the product in the review"
+        },
+        "negative_sides": {
+            "type": [
+                "array",
+                "null"
+            ],
+            "items": {
+                "type": "string"
+            },
+            "description": "Write the negative sides of the product in the review"
+        },
+        "rating": {
+            "type": "number",
+            "description": "A rating of the review between 0.00 and 10.00"
+        },
+        "recommendation": {
+            "type": "string",
+            "enum": [
+                "Buy the product",
+                "Don't buy the product",
+                "No comments"
+            ],
+            "description": "Write the recommendation of the user to buy the product or not"
+        }
+    },
+    "required": [
+        "summary",
+        "sentiment",
+        "components_discussed",
+        "rating",
+        "recommendation"
+    ]
+}
