@@ -30,13 +30,13 @@ template1 = PromptTemplate(
 )
 
 template2 = PromptTemplate(
-    template="This is a positive feedback from the user: {pos_feedback}. Write a simple appropriate reply message from our side to the user's positive feedback for their kind words. No need to give any options. Just generate a single reply to it.",
-    input_variables=['pos_feedback']
+    template="A user has given positive feedback about our service. Write a simple thank-you message appreciating the user's kind words.",
+    input_variables=[]
 )
 
 template3 = PromptTemplate(
-    template="This is a negative feedback from the user: {neg_feedback}. Write a simple appropriate reply message from our side to the user's negative feedback that we are apologetic and we will escalate this issue to a customer support executive. No need to give any options. Just generate a single reply to it.",
-    input_variables=['neg_feedback']
+    template="A user has given negative feedback about our service. Write a short apologetic message asking the user what we can improve.",
+    input_variables=[]
 )
 
 feedback = input('Enter your feedback: ')
