@@ -1,0 +1,11 @@
+requests
+langchain
+langchain_core
+langchain_google_genai
+python-dotenv
+beautifulsoup4
+regex
+streamlit
+faiss-cpu
+google-generativeai
+langchain-community
