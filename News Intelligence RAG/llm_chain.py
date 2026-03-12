@@ -28,7 +28,7 @@ def generate_answer(query: str, retrived_docs, google_api_key: str):
     )
     
     model = ChatGoogleGenerativeAI(
-        model='gemma-3-27b-it',
+        model='gemini-2.5-flash',
         google_api_key=google_api_key,
         temperature=0.3
     )
