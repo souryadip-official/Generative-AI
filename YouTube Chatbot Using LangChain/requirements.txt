@@ -1,0 +1,13 @@
+youtube-transcript-api
+langchain
+langchain-core
+langchain-community
+langchain-classic
+langchain-huggingface
+faiss-cpu
+tiktoken
+python-dotenv
+langchain-google-genai
+google-generativeai
+urllib3
+huggingface-hub
