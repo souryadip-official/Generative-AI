@@ -1,0 +1,8 @@
+langchain
+langchain-core
+langchain-community
+langchain-classic
+langchain_experimental
+pydantic
+duckduckgo-search
+ddgs
