@@ -27,7 +27,7 @@
 | **Embeddings** | HuggingFace Endpoint (`intfloat/multilingual-e5-large`) |
 | **Vector Store** | FAISS |
 | **Retriever** | MMR + Contextual Compression (LLMChainExtractor) |
-| **Transcript Source** | `youtube-transcript-api` |
+| **Transcript Source** | `youtube-transcript-api` + `yt-dlp` (fallback) |
 
 ---
 
@@ -36,13 +36,14 @@
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/souryadip-official/AskTube-AI.git
+git clone https://github.com/your-username/youtube-ai-tutor.git
+cd youtube-ai-tutor
 ```
 
 ### 2. Install dependencies
 
 ```bash
-pip install streamlit youtube-transcript-api faiss-cpu \
+pip install streamlit youtube-transcript-api yt-dlp requests faiss-cpu \
   langchain-core langchain-classic langchain-community \
   langchain-huggingface huggingface-hub
 ```
@@ -89,7 +90,7 @@ project/
 ## 💡 Notes
 
 - Answers are grounded in the video's transcript. If the answer isn't in the video, the model will say so rather than hallucinate.
-- Transcripts must be available and not disabled by the video owner.
+- Transcripts must be available and not disabled by the video owner. If `youtube-transcript-api` fails, the app automatically falls back to `yt-dlp` to extract captions.
 - Supported transcript languages: **English**, **Hindi**, **Bengali** (auto-selected in order of availability).
 - Python 3.11+ is recommended for full compatibility with all dependencies.
 

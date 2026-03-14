@@ -6,6 +6,7 @@ from fetch_transcript import fetch_transcript
 from transcript_processor import split_text, create_vector_store, get_retriever
 
 st.set_page_config(page_title="YouTube AI Tutor", page_icon="🧠", layout="wide")
+
 st.markdown("""
 <style>
 .verify-disabled{
@@ -51,7 +52,7 @@ def verify_hf_token(token):
     except:
         return False,"Invalid HuggingFace API key."
 
-# Sidebar interface (key and chatbot)
+# Sidebar interface
 with st.sidebar:
     st.title("⚙️ Setup")
     st.caption("Need a HuggingFace key?")
@@ -62,8 +63,8 @@ with st.sidebar:
     )
     st.divider()
 
-    # User key
     hf_input=st.text_input("HuggingFace API Key",type="password")
+
     if not st.session_state.keys_verified:
         if st.button("Connect",type="primary",use_container_width=True):
             if not hf_input:
@@ -79,29 +80,31 @@ with st.sidebar:
                     else:
                         st.error(msg)
     else:
-        st.button("Connected",disabled=True,use_container_width=True, type='primary')
+        st.button("Connected",disabled=True,use_container_width=True,type='primary')
         if st.button("Disconnect",type="secondary",use_container_width=True):
-            # refresh and reinitialization
             st.session_state.keys_verified=False
             st.session_state.retriever=None
             st.session_state.chat_history=[]
             st.session_state.video_url=None
             st.rerun()
-            
+
     st.divider()
 
-    # Chatbot interface
+    # Chatbot
     if st.session_state.video_url:
         st.title("💬 Chat")
         chat_container=st.container()
         with chat_container:
             if len(st.session_state.chat_history)==0:
-                st.chat_message("assistant").write("Hello! You can ask me anything about the video.")
+                st.chat_message("assistant").markdown(
+                    "Hello! You can ask me anything about the video.",
+                    unsafe_allow_html=True
+                )
+
             for message in st.session_state.chat_history:
                 with st.chat_message(message["role"]):
-                    st.markdown(message["content"])
-        
-        # User query           
+                    st.markdown(message["content"], unsafe_allow_html=True)
+
         if user_query:=st.chat_input("Ask about the video..."):
             st.session_state.chat_history.append({
                 "role":"user",
@@ -119,7 +122,8 @@ with st.sidebar:
                             retrieved_docs,
                             st.session_state.hf_api_key
                         )
-                        st.markdown(final_answer)
+                        # HTML rendering enabled here
+                        st.markdown(final_answer, unsafe_allow_html=True)
                         with st.expander("📚 Transcript Context"):
                             for i,doc in enumerate(retrieved_docs,1):
                                 st.caption(f"Chunk {i}")
@@ -130,10 +134,11 @@ with st.sidebar:
                 "content":final_answer
             })
 
-# Right side screen
+# Right side
 if not st.session_state.keys_verified:
     st.title("🧠 YouTube AI Learning Assistant")
     st.info("👈 Verify your HuggingFace API key in the sidebar to begin.")
+
 else:
     now=datetime.now().strftime("%A, %b %d, %Y | %I:%M %p")
     st.markdown(
@@ -148,11 +153,14 @@ else:
             placeholder="https://www.youtube.com/watch?v=...",
             disabled=disabled_state
         )
+
         st.caption("Open YouTube -> Click Share -> Copy Link -> Paste here")
+
         if not disabled_state:
             if st.button("Process Video"):
                 if not video_url:
                     st.warning("Paste a YouTube link first.")
+
                 else:
                     with st.status("Initializing RAG...",expanded=True) as status:
                         try:
@@ -167,12 +175,14 @@ else:
                                 docs,
                                 st.session_state.hf_api_key
                             )
+
                             st.write("🔍 Preparing retriever")
                             st.session_state.retriever=get_retriever(
                                 st.session_state.hf_api_key,
                                 vectorstore,
                                 k=4
                             )
+                            
                             st.session_state.video_url=video_url
                             st.session_state.chat_history=[]
                             status.update(
@@ -181,24 +191,19 @@ else:
                                 expanded=False
                             )
                             st.rerun()
-
                         except Exception as e:
-
                             status.update(
                                 label="Processing failed!",
                                 state="error",
                                 expanded=True
                             )
-
                             st.error(f"Error: {e}")
-
         else:
             if st.button("New Video"):
                 st.session_state.video_url=None
                 st.session_state.retriever=None
                 st.session_state.chat_history=[]
                 st.rerun()
-
     st.divider()
 
     if st.session_state.video_url:
