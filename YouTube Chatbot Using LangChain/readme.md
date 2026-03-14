@@ -36,8 +36,7 @@
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/youtube-ai-tutor.git
-cd youtube-ai-tutor
+git clone https://github.com/souryadip-official/AskTube-AI.git
 ```
 
 ### 2. Install dependencies
